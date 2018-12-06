@@ -15,6 +15,8 @@ class ModalExample extends React.Component {
 
   componentDidMount(){
 
+    //Juan Vega: Para evitar la exposición del API Key e información sensible pudiste usar variables de entorno, de forma que 
+    //no quedaran tus credenciales en texto plano dentro del código.
     fetch('https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=b11db2a17a833d9b1ac4c504bef12f4e&user_id=160816622%40N05&format=json&nojsoncallback=1')
     .then(function(response){
       return response.json();
