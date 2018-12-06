@@ -50,9 +50,9 @@ editarProducto(){
                 <div className="row">
                  <div className="col-sm">
                    <br/>
-                   <button className="btn btn-outline-danger btn-block" type="button" onClick={this.agregarProducto}>Agregar Producto</button>
+                   <button className="btn btn-outline-danger btn-block" type="button" onClick={this.agregarProducto}>Agregar producto</button>
                    <br/>
-                   <button className="btn btn-outline-danger btn-block" type="button" onClick={this.eliminarProducto}>Eliminar Prodcuto</button>
+                   <button className="btn btn-outline-danger btn-block" type="button" onClick={this.eliminarProducto}>Eliminar producto</button>
                  </div>
                  <div className="col">
                     <label >¡Agregar o Eliminar productos del menu!</label>
@@ -64,7 +64,7 @@ editarProducto(){
                     </div>  
                     <div className="input-group mb-3">
                       <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Desripcion Del Producto:</span>
+                        <span className="input-group-text" id="basic-addon3">Desripcion del producto:</span>
                       </div>
                       <textarea rows="4" cols="50" name="comment" form="usrform"/>
                     </div> 
@@ -82,19 +82,7 @@ editarProducto(){
           </div>
 
         ): (<br/>)}
-          <div className="item carousel-item">
-            <img src="https://www.thegalmont.com/files/hotel/hotel-a/08-generic/galmont-hotel-sushi-bar-01.jpg" alt="plato de seiki"/>
-            <div className="carousel-caption d-none d-md-block">
-              <h5>p.name</h5>
-              <p>p.descrip</p>
-            </div>
-            { this.props.productos.map((p,i) =>
-            <div key={i} className="carousel-caption d-none d-md-block">
-              <h5>p.name</h5>
-              <p>p.descrip</p>
-            </div>
-            )}
-          </div>      
+  
             
          
         

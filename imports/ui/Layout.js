@@ -14,17 +14,26 @@ class Layout extends Component {
       loadingState: false,
       reservas: [],
       activeTab: '1',
-      date: new Date()
+      date: new Date(),
+      dateBuscar: new Date(),
     };
     this.aceptarReserva = this.aceptarReserva.bind(this)
     this.rechazarReserva = this.rechazarReserva.bind(this)
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onChange2 = this.onChange2.bind(this);
+    this.displayItemsHoy = this.displayItemsHoy.bind(this);
+    this.displayItemsFecha = this.displayItemsFecha.bind(this);
+    this.displayItemsMañana = this.displayItemsMañana.bind(this);
   }
 
   onChange(date) {
   this.setState({ date })
-  } 
+  }
+
+  onChange2(dateBuscar) {
+  this.setState({ dateBuscar })
+  }  
 
  
   componentDidMount() {
@@ -43,17 +52,182 @@ class Layout extends Component {
     }
   }
 
-  aceptarReserva(id){
-    console.log("me estan llamando carajoooo")
-    Meteor.call("reserva.aceptar",id);
+  aceptarReserva(e){
+    var id =  e.target.id;
+    //    console.log(id)
+   Meteor.call("reserva.aceptar",id);
   }
 
-  rechazarReserva(id){
-    console.log("me estan llamando carajoooo")
+  rechazarReserva(e){
+    var id =  e.target.id;
     Meteor.call("reserva.rechazar",id);
   }
 
- 
+   displayItemsHoy(){
+
+     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth();
+    var items = [];
+    var reser = this.props.reservas;
+
+    for (var i = 0; i < this.props.reservas.length; i++) 
+  //    this.props.reservas.map((p,i)=>
+      {
+        var z = reser[i];
+        var fecha = z.fecha;
+      if(z.creador === Meteor.user().username && fecha.getMonth() === mm &&  fecha.getDate() == dd){ 
+      items.push(
+     <li key={i}>
+       <div className="card">
+        <div className="card-header">
+         <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+        </div>
+        <div className="card-body">
+          <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+          El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)} {z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+        </div>
+      </div>
+      <br/>
+    </li>);
+    }
+    else if(Meteor.user().username === "Admin" && z.estado === false && fecha.getMonth() === mm &&  fecha.getDate() == dd){
+      items.push(
+     <li key={i}>
+       <div className="card">
+        <div className="card-header">
+         <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+        </div>
+        <div className="card-body">
+          <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+          El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)}{z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+          {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" id={z.id} className="btn btn-outline-danger btn-sm" onClick={this.aceptarReserva}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm"  id={z.id} onClick={this.rechazarReserva}>Rechazar</button></div>):(null)}
+        </div>
+      </div>
+      <br/>
+    </li>);
+    }
+    }
+    return items;
+
+  } 
+
+  displayItemsMañana(){
+     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+          ];
+
+        var today = new Date();
+        var dd = today.getDate() + 1;
+        var mm = today.getMonth();
+        var items = [];
+        var reser = this.props.reservas;
+
+        for (var i = 0; i < this.props.reservas.length; i++) 
+      //    this.props.reservas.map((p,i)=>
+          {
+            var z = reser[i];
+            var fecha = z.fecha;
+          if(z.creador === Meteor.user().username && fecha.getMonth() === mm &&  fecha.getDate() == dd){ 
+          items.push(
+         <li key={i}>
+           <div className="card">
+            <div className="card-header">
+             <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+              El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)} {z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+            </div>
+          </div>
+          <br/>
+        </li>);
+        }
+        else if(Meteor.user().username === "Admin" && z.estado === false && fecha.getMonth() === mm &&  fecha.getDate() == dd){
+          items.push(
+         <li key={i}>
+           <div className="card">
+            <div className="card-header">
+             <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+              El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)}{z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+              {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" id={z.id} className="btn btn-outline-danger btn-sm" onClick={this.aceptarReserva}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm"  id={z.id} onClick={this.rechazarReserva}>Rechazar</button></div>):(null)}
+            </div>
+          </div>
+          <br/>
+        </li>);
+        }
+        }
+        return items;
+
+  }
+
+  displayItemsMes(){
+
+
+  }
+
+  displayItemsFecha(){
+
+      const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+          ];
+
+        var today = this.state.dateBuscar;
+        var dd = today.getDate();
+        var mm = today.getMonth();
+        var items = [];
+        var reser = this.props.reservas;
+
+        for (var i = 0; i < this.props.reservas.length; i++) 
+      //    this.props.reservas.map((p,i)=>
+          {
+            var z = reser[i];
+            var fecha = z.fecha;
+          if(z.creador === Meteor.user().username && fecha.getMonth() === mm &&  fecha.getDate() == dd){ 
+          items.push(
+         <li key={i}>
+           <div className="card">
+            <div className="card-header">
+             <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+              El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)} {z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+            </div>
+          </div>
+          <br/>
+        </li>);
+        }
+        else if(Meteor.user().username === "Admin" && z.estado === false && fecha.getMonth() === mm &&  fecha.getDate() == dd){
+          items.push(
+         <li key={i}>
+           <div className="card">
+            <div className="card-header">
+             <h4>Reserva para el {fecha.getDate()} de {monthNames[fecha.getMonth()]} a las {fecha.getHours()}:{fecha.getMinutes()} </h4>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
+              El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)}{z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
+              {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" id={z.id} className="btn btn-outline-danger btn-sm" onClick={this.aceptarReserva}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm"  id={z.id} onClick={this.rechazarReserva}>Rechazar</button></div>):(null)}
+            </div>
+          </div>
+          <br/>
+        </li>);
+        }
+        }
+        return items;
+
+
+  }
+
+  
   displayItems() {
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "junio",
@@ -66,6 +240,7 @@ class Layout extends Component {
       {
         var z = reser[i];
         var fecha = z.fecha;
+        var id = z.id;
       if(z.creador === Meteor.user().username){ 
       items.push(
      <li key={i}>
@@ -76,7 +251,6 @@ class Layout extends Component {
         <div className="card-body">
           <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
           El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)} {z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
-          {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.aceptarReserva(z.id)}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.rechazarReserva(z.id)}>Rechazar</button></div>):(null)}
         </div>
       </div>
       <br/>
@@ -92,13 +266,14 @@ class Layout extends Component {
         <div className="card-body">
           <h5 className="card-title">Reserva para {z.numPersonas}  personas</h5>
           El estado de esta reserva es: {z.estado === false ? (<p className="text-danger">Pendiente</p>):(null)}{z.estado === true ? (<p className="text-success">Aceptada</p>):(null)} {z.estado === "rechazada" ? (<p className="text-danger">Rechazada</p>):(null)}
-          {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.aceptarReserva(z.id)}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.rechazarReserva(z.id)}>Rechazar</button></div>):(null)}
+          {Meteor.user() && Meteor.user().username === "Admin" ? (<div><button type="button" id={z.id} className="btn btn-outline-danger btn-sm" onClick={this.aceptarReserva}>Aceptar</button><button type="button" className="btn btn-outline-danger btn-sm"  id={z.id} onClick={this.rechazarReserva}>Rechazar</button></div>):(null)}
         </div>
       </div>
       <br/>
     </li>);
     }
     }
+    console.log(items)
     return items;
   }
  
@@ -155,20 +330,37 @@ class Layout extends Component {
           <TabPane tabId="1">
             <br/>
             <ul>
-              {this.displayItems()}
+              {this.displayItemsHoy()}
             </ul>
              {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
 
           </TabPane>
           <TabPane tabId="2">
-           
+            <br/>
+            <ul>
+              {this.displayItemsMañana()}
+            </ul>
+             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
+          
           </TabPane>
           <TabPane tabId="3">
-           
+            <br/>
+            <ul>
+              {this.displayItems()}
+            </ul>
+             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
+
           </TabPane>
            <TabPane tabId="4">
             <br/>
-            <DatePicker onChange={this.onChange}  value={this.state.date} />
+            Ingresa la fecha en la que deseas buscar:
+            <DatePicker onChange={this.onChange2}  value={this.state.date} />
+            <br/>
+            <br/>
+            <ul>
+              {this.displayItemsFecha()}
+            </ul>
+             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
           </TabPane>
         </TabContent>
 

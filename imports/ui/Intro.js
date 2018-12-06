@@ -47,7 +47,7 @@ class Intro extends Component {
                   <h1 id="princ" className="display-3 text-center text-white mt-4">Seiki Sushi</h1>
                 </div>
                 <div className="col-lg-12 text-center">
-                  <button type="button" className="btn btn-outline-light">Únetenos y realiza tu Reserva</button>
+                  <button type="button" className="btn btn-outline-light" disabled>Únetenos y realiza tu Reserva</button>
                   <br/>
                   <br/>
                   <p className="text-white">¿Qué esperas para ser parte de la Familia Seiki Sushi? </p>
@@ -62,6 +62,13 @@ class Intro extends Component {
             <div className="row">
               <div className="col-sm-8">
                 <h2 id="princ" className="mt-4">¿Qué se opina de nosotros?</h2>
+                <div id="TA_selfserveprop652" className="TA_selfserveprop">
+                <ul id="2kPPNNIBtk" className="TA_links efK8EFr5jFOs">
+                <li id="8JvaszsE" className="mwb5NahGXc">
+                <a target="_blank" href="https://www.tripadvisor.co/"><img src="https://www.tripadvisor.co/img/cdsi/img2/branding/150_logo-11900-2.png" alt="TripAdvisor"/></a>
+                </li>
+                </ul>
+                </div>
               </div>
               <div className="col-sm-4">
                 <h2 id="princ" className="mt-4">¿Dónde estamos?</h2> 

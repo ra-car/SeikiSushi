@@ -1,7 +1,7 @@
 body {
   padding-top: 54px;
   font-family: 'Raleway', sans-serif;
-  background-color: #F2F4ED;
+  background-color: #F2F4ED!important;
 }
 
 @media (min-width: 992px) {
@@ -41,4 +41,16 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top{
 
 a.nav-item.nav-link.text-black{
   color: black;
+}
+
+div.login-button#login-buttons-logout{
+  background-color: #DA1E2A!important;
+}
+
+div.login-button#login-buttons-open-change-password{
+    background-color: #DA1E2A!important;
+}
+
+button.login-button.login-button-form-submit#login-buttons-password{
+   background-color: #DA1E2A!important;
 }

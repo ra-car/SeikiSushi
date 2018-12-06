@@ -11,7 +11,7 @@ class Seiki extends Component {
 
     <div className="container">
 
-      <h1 className="my-4">¿Quién e Seiki? 
+      <h1 className="my-4">¿Quién es Seiki? 
       </h1>
 
       <div className="row">
@@ -33,14 +33,14 @@ class Seiki extends Component {
 
           Simultáneamente trabajó en un restaurante del Upper East Side donde volvió a preparar Sushi ahora al estilo de los Estados Unidos.</p>
 
+          <p>Abrió entonces Seiki’s Sushi en Teaneck, Nueva Jersey, donde comenzó a crear bocados de Nigiri con adiciones de salsas exclusivas, una idea que imaginó cuando trabajaba para la revista japonesa. Tras varios años decidió mudarse al sur, a la capital del sol, Miami, donde trabajó en el restaurante Zuma de donde dio el salto a Colombia. Aquí estuvo colaborando con Toshiro Robatayaki de la cadena La Fragata y ahora ofrece sus creaciones en Seiki Sushi.
 
+          El Sushi de Seiki se puede describir como muy rico en sabor y para paladares muy sensibles.</p>
         </div>
 
       </div>
       <div className="row">
-        <p>Abrió entonces Seiki’s Sushi en Teaneck, Nueva Jersey, donde comenzó a crear bocados de Nigiri con adiciones de salsas exclusivas, una idea que imaginó cuando trabajaba para la revista japonesa. Tras varios años decidió mudarse al sur, a la capital del sol, Miami, donde trabajó en el restaurante Zuma de donde dio el salto a Colombia. Aquí estuvo colaborando con Toshiro Robatayaki de la cadena La Fragata y ahora ofrece sus creaciones en Seiki Sushi.
 
-        El Sushi de Seiki se puede describir como muy rico en sabor y para paladares muy sensibles.</p>
       </div>
 
     </div>
