@@ -1,24 +1,25 @@
 import {Mongo} from "meteor/mongo";
 import {Meteor} from "meteor/meteor";
 
-export const Menu = new Mongo.Collection("menu");  //nombre que va a tener la coleccion en la BD
+export const ElMenu = new Mongo.Collection("menu");  //nombre que va a tener la coleccion en la BD
 
 if(Meteor.isServer){
   Meteor.publish("menu", () =>{
-    return Menu.find({});
+    return ElMenu.find({});
   });
 }
 
 Meteor.methods(
   {
-    "producto.add"(name,descrip,tipo,precio){
+    "producto.add"(name,descrp,valor,tipo,url){
 
 
-      Menu.upsert({creador},{
+      ElMenu.upsert({name},{
         name,
-        descrip,
+        descrp,
+        valor,
         tipo,
-        precio
+        url
 
       });
 
@@ -26,14 +27,23 @@ Meteor.methods(
 
     "producto.del"(name){
 
-      const part = Menu.findOne({name});
+      const part = ElMenu.findOne({name});
 
-      Menu.remove(part);
+      ElMenu.remove(part);
 
  
-    }
+    },
 
+      "producto.mod"(name,valor){
+
+       const res = ElMenu.findOne({name});
+  
+      ElMenu.update({_id: res._id},{
+        $set:{
+          valor: valor
+        }
+      });
     
-
+      }
   }
 );

@@ -4,7 +4,9 @@ import {Meteor} from "meteor/meteor";
 import {withTracker} from "meteor/react-meteor-data";
 import Producto from './Producto';
 import ModalMenu from './ModalMenu';
+import MenuCard from './MenuCard';
 import classnames from 'classnames';
+import {ElMenu} from "../api/menu.js";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 class Menu extends Component {
 
@@ -12,7 +14,8 @@ class Menu extends Component {
     super(props);
     this.state = { 
       loadingState: false,
-      activeTab: '1'
+      activeTab: '1',
+      productos:[]
     };
 
     this.toggle = this.toggle.bind(this);
@@ -26,9 +29,37 @@ class Menu extends Component {
     }
   }
 
+  eliminarProducto(){
+
+  const name = document.getElementById("nombreProd").value;
+
+  Meteor.call("producto.del",name);
+
+}
+
+editarProducto(){
+  const name = document.getElementById("nombreProd").value;
+  const descrp = document.getElementById("descrpProd").value;
+  const valor = document.getElementById("nombreProd").value;
+  const tipo = document.getElementById("tipoProd").value;
+
+   Meteor.call("producto.add",name,descrp,"a",valor);
+}
+
+
+
   render() {
+
+    let losProductos = this.props.productos.map(prodct =>{
+      return(
+            <div>
+            {prodct.tipo === this.state.activeTab ?  (<div className="col-sm-6"><MenuCard src={prodct.url} name={prodct.name} val={prodct.valor} descrp={prodct.descrp}/></div>):(<div></div>)}
+            </div>
+        )
+    })
+
     return (
-    <div> 
+    <div id="tabs"> 
               <Nav tabs>
           <NavItem>
             <NavLink
@@ -98,77 +129,93 @@ class Menu extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-              1
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+            {console.log(this.props.productos.length)}
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                {losProductos}
+               </div>
+             </div>
 
           </TabPane>
           <TabPane tabId="2">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-              2
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
-          
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
           <TabPane tabId="3">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-              3
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
-
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
            <TabPane tabId="4">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            4
-
-            <ul>
-             
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
           <TabPane tabId="5">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-             5
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
-
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
           <TabPane tabId="6">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-              6
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
-          
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
           <TabPane tabId="7">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            <ul>
-              7
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
-
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
            <TabPane tabId="8">
             <br/>
-            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"}/>):(<br/>)}
-            8
-
-            <ul>
-             
-            </ul>
-             {this.state.loadingState ? <p className="loading"> loading More Items..</p> : ""}
+            {Meteor.user() && Meteor.user().username === "Admin" ? (<ModalMenu buttonLabel={"Agregar Producto"} className={"modal-dialog modal-lg"} tipo={this.state.activeTab}/>):(<br/>)}
+            <br/>
+            <br/>
+             <div ref="iScroll" style={{ height: "400px", overflow: "auto" }}>
+               <div className="row">
+                 {losProductos}
+               </div>
+             </div>
           </TabPane>
         </TabContent>
   
@@ -177,4 +224,16 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+Menu.propTypes ={
+ productos: PropTypes.array.isRequired
+};
+
+
+export default withTracker(() =>{
+  Meteor.subscribe("menu");
+  return{
+    productos: ElMenu.find({}).fetch()
+  };
+
+}
+)(Menu);

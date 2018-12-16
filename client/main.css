@@ -54,3 +54,23 @@ div.login-button#login-buttons-open-change-password{
 button.login-button.login-button-form-submit#login-buttons-password{
    background-color: #DA1E2A!important;
 }
+
+button.btn.btn-outline-danger#agregarProd{
+
+   margin: 0 auto;
+  justify-content: center;
+}
+
+div#divagregarProd{
+  justify-content: center;
+}
+
+ul.nav.nav-tabs{
+
+ float:none; 
+  
+    text-align:center;
+}
+div#tabs{
+  justify-content: center;
+}
